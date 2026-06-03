@@ -1,35 +1,22 @@
 <template>
   <div class="p-6">
     <h2 class="text-3xl font-bold mb-4">Каталог</h2>
-    <p class="mb-4">Вы взяли котов: <strong>{{ takeCount }}</strong></p>
-
-    <div class="flex gap-6 flex-wrap">
-      <CatCard 
-        title="Рыжий кот" 
-        image="/cats/cat1.jpg" 
-        @take="Take"
-      />
-      <CatCard 
-        title="Серый кот" 
-        image="/cats/cat2.jpg" 
-        @take="Take"
-      />
-      <CatCard 
-        title="Чёрный кот" 
-        image="/cats/cat3.jpg" 
-        @take="Take"
-      />
-    </div>
+    <h3 class="text-2xl font-bold mb-4">Владельцы котов:</h3>
+    
+    <ul class="border rounded p-4 bg-white shadow">
+      <li v-for="item in store.fetchdata" class="mb-4 pb-4 border-b last:border-b-0">
+        <p class="font-bold text-lg">{{ item.name }}</p>
+        <p>Email: {{ item.email }}</p>
+        <p>Город: {{ item.address.city }}</p>
+        <p>Телефон: {{ item.phone }}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
-import CatCard from './CatCard.vue'
-import { ref } from 'vue'
-
-let takeCount = ref(0)
-function Take(name) {
-  takeCount.value++
-  alert(`Вы взяли: ${name}!`)
-}
+import { useCounterStore } from '@/store/store'
+const store = useCounterStore()
+store.informdata()
+store.getApidata()
 </script>
